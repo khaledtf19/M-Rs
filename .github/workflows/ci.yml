@@ -8,6 +8,7 @@ env:
   NEXTAUTH_SECRET: "fake" 
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "fake"
   CLERK_SECRET_KEY: "fake"
+  TMDB_API_KEY: "fake"
 
 jobs:
   build:
