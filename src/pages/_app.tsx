@@ -1,9 +1,9 @@
-import { type AppType } from "next/app";
+import Layout from "@/components/Layouts/Layout";
+import { api } from "@/utils/api";
 import { ClerkProvider } from "@clerk/nextjs";
-import { api } from "../utils/api";
+import { type AppType } from "next/app";
 
 import "../styles/globals.css";
-import Layout from "~/components/Layouts/Layout";
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
