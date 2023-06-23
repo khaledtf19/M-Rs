@@ -9,7 +9,6 @@ export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
     .input(z.object({ text: z.string() }))
     .query(({ input, ctx }) => {
-      console.log(ctx.auth);
       if (ctx.auth.userId) {
         return {
           greeting: `Hello ${input.text} from server`,
