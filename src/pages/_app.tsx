@@ -2,6 +2,7 @@ import Layout from "@/components/Layouts/Layout";
 import { api } from "@/utils/api";
 import { ClerkProvider } from "@clerk/nextjs";
 import { type AppType } from "next/app";
+import Navbar from "~/components/Navbar";
 
 import "../styles/globals.css";
 
