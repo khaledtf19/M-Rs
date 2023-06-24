@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import React from "react";
@@ -19,6 +19,8 @@ import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
+import { useRouter } from "next/router";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
 const Navbar = () => {
   return (
@@ -34,7 +36,7 @@ export default Navbar;
 const MainNav = () => {
   const { setTheme } = useTheme();
   return (
-    <NavigationMenu className="flex justify-between">
+    <NavigationMenu className="justify-between hidden lg:flex">
       <NavigationMenuList>
         <LinkButton href="/" text="Home" />
         <LinkButton href="/movies" text="Movies" />
@@ -72,7 +74,32 @@ const MainNav = () => {
   );
 };
 const MobileNav = () => {
-  return <></>;
+ const {pathname} = useRouter()
+  const [isOpen, setIsOpen] = React.useState(false)
+  return <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+        >
+          <Menu className="h-6 w-6" />
+          <span className="sr-only">Toggle Menu</span>
+        </Button>
+      </SheetTrigger>
+    <SheetContent side="left" className="pl-1 pr-0">
+<div className="px-7">
+          <Link
+            aria-label="Home"
+            href="/"
+            className="flex items-center"
+            onClick={() => setIsOpen(false)}
+          >
+            <Sun className="mr-2 h-4 w-4" aria-hidden="true" />
+            <span className="font-bold">Home</span>
+          </Link>
+        </div>
+    </SheetContent>
+  </Sheet>;
 };
 
 const LinkButton: React.FC<{ href: string; text: string }> = ({
