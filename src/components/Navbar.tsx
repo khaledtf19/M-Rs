@@ -3,7 +3,6 @@ import {
   Github,
   Laptop,
   LogIn,
-  LucideIcon,
   Moon,
   PanelRightCloseIcon,
   Sun,
@@ -37,8 +36,8 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 right-0 left-0 z-50">
       <div className="container py-3 ">
-        <MainNav userId={userId} />
-        <MobileNav userId={userId} />
+        <MainNav userId={userId} currentPathname={pathname} />
+        <MobileNav userId={userId} currentPathname={pathname} />
       </div>
       <Separator />
     </div>
@@ -118,9 +117,9 @@ const MainNav: React.FC<{
             <UserButton afterSignOutUrl="/" />
           ) : (
             <SignInButton mode="modal">
-              <Button variant="outline" >
+              <Button variant="outline">
                 <LogIn className="h-5 w-5" />
-                  LogIn
+                LogIn
                 <span className="sr-only">Sign in</span>
               </Button>
             </SignInButton>
@@ -178,17 +177,19 @@ const MobileNav: React.FC<{
               )}
             </div>
             <div>
-          {userId ? (
-          null
-          ) : (
-            <SignInButton mode="modal">
-              <Button variant="outline" className="w-full"onClick={() => setIsOpen(false)} >
-                <LogIn className="h-5 w-5" />
-                      LogIn
-                <span className="sr-only">Sign in</span>
-              </Button>
-            </SignInButton>
-          )}
+              {userId ? null : (
+                <SignInButton mode="modal">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <LogIn className="h-5 w-5" />
+                    LogIn
+                    <span className="sr-only">Sign in</span>
+                  </Button>
+                </SignInButton>
+              )}
             </div>
           </div>
         </SheetContent>
@@ -197,16 +198,13 @@ const MobileNav: React.FC<{
         <a
           href="https://github.com/khaledtf19/M-Rs"
           target="_blank"
-          className={buttonVariants({variant: "ghost", size: "icon"})}
+          className={buttonVariants({ variant: "ghost", size: "icon" })}
         >
           <Github className="h-8 w-8" />
         </a>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant={"ghost"}
-              size="icon"
-            >
+            <Button variant={"ghost"} size="icon">
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-8 w-8 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
               <span className="sr-only">Toggle theme</span>
@@ -236,11 +234,11 @@ const MobileNav: React.FC<{
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        {userId? (
-          <div className={buttonVariants({variant: "ghost", size: "icon"})}>  
-          <UserButton afterSignOutUrl="/" />
+        {userId ? (
+          <div className={buttonVariants({ variant: "ghost", size: "icon" })}>
+            <UserButton afterSignOutUrl="/" />
           </div>
-        ):null}
+        ) : null}
       </div>
     </div>
   );
