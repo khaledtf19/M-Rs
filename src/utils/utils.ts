@@ -17,8 +17,8 @@ export const mainNavLinks = [
     auth: false,
   },
   {
-    name: "Series",
-    url: "/series",
+    name: "TV",
+    url: "/tv",
     icon: Tv,
     auth: false,
   },
