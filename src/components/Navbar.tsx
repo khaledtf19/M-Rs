@@ -1,7 +1,8 @@
-import { useAuth } from "@clerk/nextjs";
+import { SignInButton, UserButton, useAuth } from "@clerk/nextjs";
 import {
   Github,
   Laptop,
+  LogIn,
   LucideIcon,
   Moon,
   PanelRightCloseIcon,
@@ -64,7 +65,16 @@ const MainNav: React.FC<{
           )
         )}
       </NavigationMenuList>
-      <NavigationMenuList className=" flex gap-2" >
+      <NavigationMenuList className=" flex gap-2">
+        <NavigationMenuItem>
+          <a
+            href="https://github.com/khaledtf19/M-Rs"
+            target="_blank"
+            className={navigationMenuTriggerStyle()}
+          >
+            <Github className="h-5 w-5" />
+          </a>
+        </NavigationMenuItem>
         <NavigationMenuItem>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -104,9 +114,17 @@ const MainNav: React.FC<{
           </DropdownMenu>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <a href="https://github.com/khaledtf19/M-Rs" target="_blank" className={navigationMenuTriggerStyle()}>
-            <Github className="h-5 w-5" />
-          </a>
+          {userId ? (
+            <UserButton afterSignOutUrl="/" />
+          ) : (
+            <SignInButton mode="modal">
+              <Button variant="outline" >
+                <LogIn className="h-5 w-5" />
+                  LogIn
+                <span className="sr-only">Sign in</span>
+              </Button>
+            </SignInButton>
+          )}
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
@@ -126,6 +144,7 @@ const MobileNav: React.FC<{
           <Button
             variant="ghost"
             className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+            size="icon"
           >
             <PanelRightCloseIcon className="h-8 w-8" />
             <span className="sr-only">Toggle Menu</span>
@@ -158,18 +177,33 @@ const MobileNav: React.FC<{
                 )
               )}
             </div>
-            <div></div>
+            <div>
+          {userId ? (
+          null
+          ) : (
+            <SignInButton mode="modal">
+              <Button variant="outline" className="w-full"onClick={() => setIsOpen(false)} >
+                <LogIn className="h-5 w-5" />
+                      LogIn
+                <span className="sr-only">Sign in</span>
+              </Button>
+            </SignInButton>
+          )}
+            </div>
           </div>
         </SheetContent>
       </Sheet>
       <div className="flex items-center gap-1">
-        <a href="https://github.com/khaledtf19/M-Rs" target="_blank" className={navigationMenuTriggerStyle()}>
+        <a
+          href="https://github.com/khaledtf19/M-Rs"
+          target="_blank"
+          className={buttonVariants({variant: "ghost", size: "icon"})}
+        >
           <Github className="h-8 w-8" />
         </a>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              className={navigationMenuTriggerStyle()}
               variant={"ghost"}
               size="icon"
             >
@@ -202,6 +236,11 @@ const MobileNav: React.FC<{
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        {userId? (
+          <div className={buttonVariants({variant: "ghost", size: "icon"})}>  
+          <UserButton afterSignOutUrl="/" />
+          </div>
+        ):null}
       </div>
     </div>
   );
