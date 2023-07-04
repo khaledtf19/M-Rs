@@ -18,20 +18,4 @@ export const exampleRouter = createTRPCRouter({
         greeting: `Hello ${input.text}`,
       };
     }),
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
-  createOne: protectedProcedure
-    .input(
-      z.object({
-        text: z.string(),
-      })
-    )
-    .mutation(({ input, ctx }) => {
-      return ctx.prisma.example.create({
-        data: {
-          text: input.text,
-        },
-      });
-    }),
 });
