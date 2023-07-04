@@ -12,9 +12,39 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Example {
+model Review {
   id        String   @id @default(cuid())
-  text      String
+  userId    String
+  title     String
+  content   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  movieId   String?
+  Movie     Movie?   @relation(name: "ReviewsForMovie", fields: [movieId], references: [id])
+
+  @@index([userId])
+  @@index([movieId])
+}
+
+model Movie {
+  id            String   @id
+  title         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  imdb_id       String
+  backdrop_path String
+  overview      String
+  poster_path   String
+  release_date  String
+  genres        Genre[]  @relation("Genres")
+  reviews       Review[] @relation("ReviewsForMovie")
+}
+
+model Genre {
+  id      String  @id
+  name    String
+  Movie   Movie[] @relation("Genres")
+  movieId String?
+
+  @@unique([name])
 }
