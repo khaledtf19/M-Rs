@@ -41,10 +41,9 @@ model Movie {
 }
 
 model Genre {
-  id      String  @id
-  name    String
-  Movie   Movie[] @relation("Genres")
-  movieId String?
+  id    String  @id
+  name  String
+  Movie Movie[] @relation("Genres")
 
   @@unique([name])
 }

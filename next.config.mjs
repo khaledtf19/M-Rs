@@ -18,6 +18,9 @@ const config = {
   , eslint: {
     ignoreDuringBuilds: true
   },
+  images: {
+    domains: ["image.tmdb.org", "www.themoviedb.org"],
+  }
 
 };
 export default config;
