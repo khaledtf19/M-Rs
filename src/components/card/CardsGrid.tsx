@@ -22,7 +22,7 @@ const CardsGrid: React.FC<{ cards: CardType[] }> = ({ cards }) => {
                 className="rounded-t-md"
                 fill
                 src={SmallPoster + card.image}
-                sizes="(max-width: 500px) 100px, (max-width: 900px) 200px, (max-width: 1200px) 300px, "
+                sizes="(max-width: 500px) 200px, (max-width: 900px) 200px, (max-width: 1200px) 300px, "
               />
             </div>
           </CardHeader>

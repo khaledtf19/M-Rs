@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import * as React from "react";
 
+// eslint-disable-next-line no-use-before-define
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
