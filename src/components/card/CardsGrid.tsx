@@ -1,13 +1,20 @@
-import { CardType } from "~/types/utils"
+import { CardType } from "~/types/utils";
 
-const CardsGrid:React.FC<{cards: CardType[]}> = ({cards}) => {
+import { Card, CardContent, CardHeader } from "../ui/card";
+
+const CardsGrid: React.FC<{ cards: CardType[] }> = ({ cards }) => {
   return (
     <div>
-    {cards.map((card) => (
-      <div key={card.id}>{card.title}</div>      
-    ))}
+      {cards.map((card) => (
+        <Card key={card.id}>
+          <CardContent>
+            {card.description}
+          </CardContent>
+          <CardHeader>{card.title}</CardHeader>
+        </Card>
+      ))}
     </div>
-  )
-}
+  );
+};
 
-export default CardsGrid
+export default CardsGrid;

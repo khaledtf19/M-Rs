@@ -34,7 +34,7 @@ const Navbar = () => {
   const { userId } = useAuth();
   const { pathname } = useRouter();
   return (
-    <div className="sticky top-0 right-0 left-0 z-50">
+    <div className="sticky top-0 right-0 left-0 z-50 bg-background">
       <div className="container py-3 ">
         <MainNav userId={userId} currentPathname={pathname} />
         <MobileNav userId={userId} currentPathname={pathname} />
