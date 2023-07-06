@@ -2,7 +2,6 @@ import { useState } from "react";
 import CardsGrid from "~/components/card/CardsGrid";
 import { Input } from "~/components/ui/input";
 import { CardType } from "~/types/utils";
-import { SmallPoster } from "~/utils/utils";
 
 const fakeData = [
   {
@@ -42,7 +41,7 @@ const SearchPage: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <div className="w-full md:w-1/2 lg:w-1/3">
-        <Input value={search} onChange={(e) => setSearch(e.target.value)} />
+        <Input type="search" placeholder="Title..." value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <CardsGrid cards={fakeData} />
     </div>
