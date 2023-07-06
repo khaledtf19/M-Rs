@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { cn } from "~/lib/utils";
+
 import Navbar from "../Navbar";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -10,11 +10,9 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <meta name="description" content="Movies Reviews" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar/>
-      <main className={cn("bg-background min-h-screen")}>
-        <div className="container">
-        {children}
-        </div>
+      <Navbar />
+      <main className="bg-background min-h-screen pt-5">
+        <div className=" px-2 md:container">{children}</div>
       </main>
     </>
   );
