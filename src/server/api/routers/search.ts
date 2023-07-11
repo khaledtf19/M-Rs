@@ -11,11 +11,12 @@ export const searchRouter = createTRPCRouter({
         curser: z.number().nullish(),
       })
     )
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       let { query, curser } = input;
       curser = curser ?? 1;
+      
 
-      const response = await fetch(
+      const response = await fetch (
         `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=${curser}`
       );
       const data = (await response.json()) as SearchResultsType;

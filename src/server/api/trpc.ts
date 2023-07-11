@@ -94,6 +94,16 @@ const isAuthed = t.middleware(({ ctx, next }) => {
     },
   });
 })
+const isAdmin = t.middleware(({ ctx, next }) => {
+  if (ctx.auth.organization?.name !== "admin") {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      auth: ctx.auth,
+    },
+  })
+})
 /**
  * This is how you create new routers and sub-routers in your tRPC API.
  *
@@ -110,5 +120,6 @@ export const createTRPCRouter = t.router;
  */
 export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use(isAuthed);
+export const adminProcedure = t.procedure.use(isAdmin);
 
 
