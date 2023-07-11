@@ -1,28 +1,28 @@
 export type CardType = {
-  id: string;
+  id: number;
   title: string;
   image: string;
   description: string;
+  type: MediaArrType;
 };
 
 export type SearchResultsType = {
   page: number
-  results: Result[]
+  results: ResultType[]
   total_pages: number
   total_results: number
 }
 
-export type Result = {
+export type ResultType = {
   title?: string
   name?: string
-  adult: boolean
   backdrop_path?: string
   id: number
   original_name?: string
   original_language: string
   overview: string
   poster_path?: string
-  media_type: "tv"| "movie" 
+  media_type: MediaArrType 
   genre_ids: number[]
   popularity: number
   first_air_date?: string
@@ -33,3 +33,6 @@ export type Result = {
   release_date?: string
   video?: boolean
 }
+
+export const MediaArr = ["movie", "tv"] as const
+export type MediaArrType = (typeof MediaArr)[number] 

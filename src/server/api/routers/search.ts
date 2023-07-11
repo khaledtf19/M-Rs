@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { SearchResultsType } from "~/types/utils";
+import { CardType, SearchResultsType } from "~/types/utils";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -19,10 +19,20 @@ export const searchRouter = createTRPCRouter({
         `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=${curser}`
       );
       const data = (await response.json()) as SearchResultsType;
+      let results = data.results.map((movie) => ({
+        id: movie.id,
+        title: movie.title,
+        image: movie.poster_path,
+        description: movie.overview,
+        type: movie.media_type,
+      })) as CardType[];
 
       return {
+        curser: curser,
         nextPage: curser + 1,
+        prevPage: curser - 1,
         maxPages: data.total_pages,
+        results: results,
       };
     }),
 });
