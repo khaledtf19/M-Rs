@@ -1,17 +1,22 @@
 import { useState } from "react";
 import CardsGrid from "~/components/card/CardsGrid";
+import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { api } from "~/utils/api";
 
 const SearchPage: React.FC = () => {
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(0);
+
   const Q = api.search.search.useInfiniteQuery(
     {
       query: search,
     },
     {
-      getNextPageParam: (lastPage) => lastPage.nextPage,
-      getPreviousPageParam: (lastPage) => lastPage.prevPage,
+      getNextPageParam: (lastPage) =>
+        lastPage.maxPages < currentPage + 1 ? undefined : lastPage.nextPage,
+      getPreviousPageParam: (lastPage) =>
+        currentPage === 0 ? undefined : lastPage.prevPage,
       initialCursor: 1,
     }
   );
@@ -23,10 +28,36 @@ const SearchPage: React.FC = () => {
           type="search"
           placeholder="Title..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setCurrentPage(0);
+          }}
         />
       </div>
-      <CardsGrid cards={Q.data?.pages[0]?.results} />
+      <CardsGrid cards={Q.data?.pages[currentPage]?.results} />
+      {Q.isFetching && <div>Loading...</div>}
+      <div>
+        <Button
+          onClick={() => {
+            Q.fetchNextPage();
+            setCurrentPage((prevPage) => prevPage + 1);
+          }}
+          variant={"outline"}
+          disabled={!Q.hasNextPage}
+        >
+          Next Page
+        </Button>
+        <Button
+          onClick={() => {
+            Q.fetchPreviousPage();
+            setCurrentPage((prevPage) => prevPage - 1);
+          }}
+          variant={"outline"}
+          disabled={!Q.hasPreviousPage}
+        >
+          Prev Page
+        </Button>
+      </div>
     </div>
   );
 };

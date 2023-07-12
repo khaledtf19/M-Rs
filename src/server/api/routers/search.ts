@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { CardType, SearchResultsType } from "~/types/utils";
 import { env } from "~/env.mjs";
+import { CardType, SearchResultsType } from "~/types/utils";
 
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -12,29 +12,30 @@ export const searchRouter = createTRPCRouter({
         cursor: z.number().nullish(),
       })
     )
-    .query(async ({ input, ctx }) => {
-      let { query, cursor } = input;
-      cursor = cursor ?? 1;
-      
+    .query(async ({ input }) => {
+      const cursor = input.cursor ?? 1;
 
-      const response = await fetch (
-        `https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=en-US&page=${cursor}`,{
-        headers:{
-          contentType: "application/json",
-          Authorization: `Bearer ${env.TMDB_API_KEY}`
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/multi?query=${input.query}&include_adult=false&language=en-US&page=${cursor}`,
+        {
+          headers: {
+            contentType: "application/json",
+            Authorization: `Bearer ${env.TMDB_API_KEY}`,
+          },
         }
-      }
       );
       const data = (await response.json()) as SearchResultsType;
-      if(!data.results) return {
-        results: [],
-        nextPage: 0,
-        prevPage: 0,
-        maxPages: 0,
-      }
-      let results = data.results.map((movie) => ({
+    console.log(data)
+         if (!data||data.results.length === 0)
+        return {
+          results: undefined,
+          nextPage: undefined,
+          prevPage: undefined,
+          maxPages: 0,
+        };
+      const results = data.results.map((movie) => ({
         id: movie.id,
-        title: movie.title|| movie.name,
+        title: movie.title || movie.name,
         image: movie.poster_path,
         description: movie.overview,
         type: movie.media_type,
