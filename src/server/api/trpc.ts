@@ -13,7 +13,7 @@ import { ZodError } from "zod";
 import { prisma } from "~/server/db";
 
 import { getAuth } from "@clerk/nextjs/server";
-import type { SignedInAuthObject,SignedOutAuthObject } from "@clerk/nextjs/api";
+import { SignedInAuthObject,SignedOutAuthObject, users } from "@clerk/nextjs/api";
 
 /**
  * 1. CONTEXT
@@ -94,8 +94,16 @@ const isAuthed = t.middleware(({ ctx, next }) => {
     },
   });
 })
-const isAdmin = t.middleware(({ ctx, next }) => {
-  if (ctx.auth.organization?.name !== "admin") {
+const isAdmin = t.middleware(async({ ctx, next }) => {
+  if (!ctx.auth.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  const orgs =await users.getOrganizationMembershipList({userId: ctx.auth.userId});
+  // if(!user) {
+  //   throw new TRPCError({ code: "UNAUTHORIZED" });
+  // }
+
+  if (orgs[0]?.organization.name !== "admin") {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({

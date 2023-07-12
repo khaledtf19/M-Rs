@@ -25,7 +25,7 @@ model Review {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   movieId   String?
-  Movie     Media?   @relation(name: "Reviews", fields: [movieId], references: [id])
+  movie     Media?   @relation(name: "Reviews", fields: [movieId], references: [id])
 
   @@index([userId])
   @@index([movieId])
@@ -33,8 +33,8 @@ model Review {
 
 model Media {
   id            String    @id @default(cuid())
-  type          MediaType
   MDBID         Int
+  type          MediaType
   title         String?
   name          String?
   createdAt     DateTime  @default(now())
@@ -49,12 +49,16 @@ model Media {
 
   @@index([type])
   @@index([name])
+  @@index([MDBID])
 }
 
 model Genre {
-  id    Int     @id
+  id    String    @id @default(cuid())
+  MDBID Int
   name  String
-  Movie Media[] @relation("Genres")
+  type  MediaType
+  media Media[]   @relation("Genres")
 
-  @@unique([name])
+  @@index([type])
+  @@index([MDBID])
 }

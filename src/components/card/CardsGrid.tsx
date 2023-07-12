@@ -10,7 +10,8 @@ import {
   CardTitle,
 } from "../ui/card";
 
-const CardsGrid: React.FC<{ cards: CardType[] }> = ({ cards }) => {
+const CardsGrid: React.FC<{ cards?: CardType[] }> = ({ cards }) => {
+  if(!cards) return null;
   return (
     <div className="grid grid-cols-1  place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-full gap-5">
       {cards.map((card) => (
@@ -29,9 +30,9 @@ const CardsGrid: React.FC<{ cards: CardType[] }> = ({ cards }) => {
               />
             </div>
           </CardHeader>
-          <CardContent className="px-3">
-            <CardTitle>{card.title}</CardTitle>
-            <CardDescription>{card.description}</CardDescription>
+          <CardContent className="px-3 flex flex-col gap-2">
+            <CardTitle className="  truncate">{card.title}</CardTitle>
+            <CardDescription className="text-sm  text-ellipsis  overflow-hidden  h-20">{card.description}</CardDescription>
           </CardContent>
         </Card>
       ))}
