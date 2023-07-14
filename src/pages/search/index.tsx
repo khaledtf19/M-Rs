@@ -22,7 +22,7 @@ const SearchPage: React.FC = () => {
   });
 
   useEffect(() => {
-    let timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       mutateSearch({ query: search, page: 1 });
       setCurrentPage(1);
       setMaxPages(0);
@@ -54,7 +54,7 @@ const SearchPage: React.FC = () => {
       )}
       <div>
         <Button
-          onClick={async () => {
+          onClick={() => {
             if (!pages[currentPage]) {
               mutateSearch({ query: search, page: currentPage + 1 });
             }
@@ -66,7 +66,7 @@ const SearchPage: React.FC = () => {
           Next Page
         </Button>
         <Button
-          onClick={async () => {
+          onClick={() => {
             if (!pages[currentPage - 1]) {
               mutateSearch({ query: search, page: currentPage - 1 });
             }
