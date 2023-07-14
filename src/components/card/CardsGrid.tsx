@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CardType } from "~/types/utils";
+import type { CardType } from "~/types/utils";
 import { SmallPoster } from "~/utils/utils";
 
 import {
@@ -11,7 +11,7 @@ import {
 } from "../ui/card";
 
 const CardsGrid: React.FC<{ cards?: CardType[] }> = ({ cards }) => {
-  if(!cards) return null;
+  if (!cards) return null;
   return (
     <div className="grid grid-cols-1  place-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-full gap-5">
       {cards.map((card) => (
@@ -32,7 +32,10 @@ const CardsGrid: React.FC<{ cards?: CardType[] }> = ({ cards }) => {
           </CardHeader>
           <CardContent className="px-3 flex flex-col gap-2">
             <CardTitle className="  truncate">{card.title}</CardTitle>
-            <CardDescription className="text-sm  text-ellipsis  overflow-hidden  h-20">{card.description}</CardDescription>
+            <CardDescription className="flex flex-col gap-2 items-center text-sm  text-ellipsis  overflow-hidden  h-16">
+              <span>{card.releaseDate ? card.releaseDate : "-"}</span>
+              <span>{card.description}</span>
+            </CardDescription>
           </CardContent>
         </Card>
       ))}

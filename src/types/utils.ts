@@ -4,6 +4,7 @@ export type CardType = {
   image: string;
   description: string;
   type: MediaArrType;
+  releaseDate: string;
 };
 
 export type SearchResultsType = {

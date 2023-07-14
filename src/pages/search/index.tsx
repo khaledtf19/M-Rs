@@ -2,25 +2,33 @@ import { useEffect, useState } from "react";
 import CardsGrid from "~/components/card/CardsGrid";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import { CardType } from "~/types/utils";
 import { api } from "~/utils/api";
 
 const SearchPage: React.FC = () => {
   const [search, setSearch] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
+  const [maxPages, setMaxPages] = useState(0);
+  const [pages, setPages] = useState<CardType[][]>([]);
 
+  const { isLoading, mutate: mutateSearch } = api.search.search.useMutation({
+    onSuccess: (newData) => {
+      setMaxPages(newData.maxPages);
+      const newPages = pages;
+      newPages[newData.page - 1] = newData.results;
+      setPages(newPages);
+    },
+  });
 
-  const {data, isLoading, mutate: mutateSearch} = api.search.search.useMutation({})
   useEffect(() => {
     let timer = setTimeout(() => {
-      mutateSearch({ query: search, page: 1}) 
+      mutateSearch({ query: search, page: 1 });
+      setCurrentPage(1);
+      setMaxPages(0);
+      setPages([]);
     }, 1500);
     return () => clearTimeout(timer);
   }, [search]);
-
-  useEffect(() => {
-    console.log("currentPage", currentPage);
-  }, [currentPage]);
 
   return (
     <div className="flex flex-col items-center justify-center gap-5">
@@ -31,35 +39,37 @@ const SearchPage: React.FC = () => {
           value={search}
           onChange={(e) => {
             setSearch((prevstate) => {
-              if (prevstate !== e.target.value) {
-                console.log(e.target.value, "here");
-                setCurrentPage(1);
-              }
               return e.target.value;
             });
           }}
         />
       </div>
-      <CardsGrid cards={data?.results} />
+      <CardsGrid cards={pages[currentPage - 1]} />
       {isLoading && <div>Loading...</div>}
       <div>
         <Button
           onClick={async () => {
-            mutateSearch({ query: search, page: currentPage + 1 });
+            if (maxPages !== pages.length) {
+              mutateSearch({ query: search, page: currentPage + 1 });
+            }
+
             setCurrentPage((prevPage) => prevPage + 1);
           }}
           variant={"outline"}
-          /* disabled={!Q.hasNextPage} */
+          disabled={maxPages === currentPage}
         >
           Next Page
         </Button>
         <Button
-          onClick={async () => {            
-            mutateSearch({ query: search, page: currentPage - 1 });
+          onClick={async () => {
+            if (maxPages !== pages.length) {
+              if (pages[currentPage - 1]?.length === 0) return;
+              mutateSearch({ query: search, page: currentPage - 1 });
+            }
             setCurrentPage((prevPage) => prevPage - 1);
           }}
           variant={"outline"}
-          // disabled={!Q.hasPreviousPage}
+          disabled={currentPage === 1}
         >
           Prev Page
         </Button>
