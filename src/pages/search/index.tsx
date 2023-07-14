@@ -55,10 +55,11 @@ const SearchPage: React.FC = () => {
       <div>
         <Button
           onClick={async () => {
-            if (maxPages !== pages.length) {
-              if (pages[currentPage - 1]?.length === 0) return;
+            if ( !pages[currentPage] ) {
+              console.log("here")
               mutateSearch({ query: search, page: currentPage + 1 });
             }
+            console.log(pages[currentPage]?.length)
 
             setCurrentPage((prevPage) => prevPage + 1);
           }}
@@ -69,8 +70,7 @@ const SearchPage: React.FC = () => {
         </Button>
         <Button
           onClick={async () => {
-            if (maxPages !== pages.length) {
-              if (pages[currentPage - 1]?.length === 0) return;
+            if (!pages[currentPage - 1]) {
               mutateSearch({ query: search, page: currentPage - 1 });
             }
             setCurrentPage((prevPage) => prevPage - 1);

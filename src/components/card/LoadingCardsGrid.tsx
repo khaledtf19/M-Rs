@@ -24,10 +24,10 @@ const LoadingCardsGrid: React.FC<{ cards: { id: number }[] }> = ({ cards }) => {
             <CardTitle className="  truncate">
               <Skeleton className="w-full h-6" />
             </CardTitle>
-            <CardDescription className="flex flex-col gap-2 items-center text-sm  text-ellipsis  overflow-hidden  h-16">
+            <div className="text-sm text-muted-foreground flex flex-col gap-2 items-center text-ellipsis  overflow-hidden  h-16 relative">
               <Skeleton className="w-32 h-9" />
               <Skeleton className=" w-full h-full" />
-            </CardDescription>
+            </div>
           </CardContent>
         </Card>
       ))}
