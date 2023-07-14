@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CardsGrid from "~/components/card/CardsGrid";
+import LoadingCardsGrid from "~/components/card/LoadingCardsGrid";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { CardType } from "~/types/utils";
@@ -44,12 +45,18 @@ const SearchPage: React.FC = () => {
           }}
         />
       </div>
-      <CardsGrid cards={pages[currentPage - 1]} />
-      {isLoading && <div>Loading...</div>}
+      {isLoading ? (
+        <LoadingCardsGrid
+          cards={Array.from({ length: 20 }, (_, i) => ({ id: i + 1 }))}
+        />
+      ) : (
+        <CardsGrid cards={pages[currentPage - 1]} />
+      )}
       <div>
         <Button
           onClick={async () => {
             if (maxPages !== pages.length) {
+              if (pages[currentPage - 1]?.length === 0) return;
               mutateSearch({ query: search, page: currentPage + 1 });
             }
 
