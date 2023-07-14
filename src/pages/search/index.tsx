@@ -55,12 +55,9 @@ const SearchPage: React.FC = () => {
       <div>
         <Button
           onClick={async () => {
-            if ( !pages[currentPage] ) {
-              console.log("here")
+            if (!pages[currentPage]) {
               mutateSearch({ query: search, page: currentPage + 1 });
             }
-            console.log(pages[currentPage]?.length)
-
             setCurrentPage((prevPage) => prevPage + 1);
           }}
           variant={"outline"}
