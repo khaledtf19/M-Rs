@@ -12,6 +12,11 @@ datasource db {
   relationMode = "prisma"
 }
 
+enum MediaType {
+  movie
+  tv
+}
+
 model Review {
   id        String   @id @default(cuid())
   userId    String
@@ -20,30 +25,40 @@ model Review {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   movieId   String?
-  Movie     Movie?   @relation(name: "ReviewsForMovie", fields: [movieId], references: [id])
+  movie     Media?   @relation(name: "Reviews", fields: [movieId], references: [id])
 
   @@index([userId])
   @@index([movieId])
 }
 
-model Movie {
-  id            String   @id
-  title         String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+model Media {
+  id            String    @id @default(cuid())
+  MDBID         Int
+  type          MediaType
+  title         String?
+  name          String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   imdb_id       String
   backdrop_path String
   overview      String
   poster_path   String
   release_date  String
-  genres        Genre[]  @relation("Genres")
-  reviews       Review[] @relation("ReviewsForMovie")
+  genres        Genre[]   @relation("Genres")
+  reviews       Review[]  @relation("Reviews")
+
+  @@index([type])
+  @@index([name])
+  @@index([MDBID])
 }
 
 model Genre {
-  id    String  @id
+  id    String    @id @default(cuid())
+  MDBID Int
   name  String
-  Movie Movie[] @relation("Genres")
+  type  MediaType
+  media Media[]   @relation("Genres")
 
-  @@unique([name])
+  @@index([type])
+  @@index([MDBID])
 }
