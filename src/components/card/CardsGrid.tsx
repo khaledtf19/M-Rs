@@ -31,7 +31,7 @@ const CardsGrid: React.FC<{ cards?: CardType[] }> = ({ cards }) => {
             </div>
           </CardHeader>
           <CardContent className="px-3 flex flex-col gap-2">
-            <CardTitle className="  truncate">{card.title}</CardTitle>
+            <CardTitle className="truncate">{card.title}</CardTitle>
             <CardDescription className="flex flex-col gap-2 items-center text-sm  text-ellipsis  overflow-hidden  h-16">
               <span>{card.releaseDate ? card.releaseDate : "-"}</span>
               <span>{card.description}</span>

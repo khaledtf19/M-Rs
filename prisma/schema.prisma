@@ -11,9 +11,14 @@ datasource db {
   relationMode = "prisma"
 }
 
-enum MediaType {
+enum MediaEnum {
   movie
   tv
+}
+
+enum MediaStatusEnum {
+  Released
+  Upcoming
 }
 
 model Review {
@@ -31,20 +36,24 @@ model Review {
 }
 
 model Media {
-  id            String    @id @default(cuid())
-  MDBID         Int
-  type          MediaType
-  title         String?
-  name          String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  imdb_id       String
-  backdrop_path String
-  overview      String
-  poster_path   String
-  release_date  String
-  genres        Genre[]   @relation("Genres")
-  reviews       Review[]  @relation("Reviews")
+  id                  String    @id @default(cuid())
+  MDBID               Int
+  type                MediaEnum
+  name                String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  imdb_id             String?
+  backdrop_path       String?
+  overview            String?
+  poster_path         String?
+  release_date        String?
+  production_countrie String?
+  runtime             Int?
+  spoken_language     String?
+  tagline             String?
+  genres              Genre[]   @relation("Genres")
+  reviews             Review[]  @relation("Reviews")
+  Companys            Company[] @relation("Companies")
 
   @@index([type])
   @@index([name])
@@ -55,9 +64,21 @@ model Genre {
   id    String    @id @default(cuid())
   MDBID Int
   name  String
-  type  MediaType
+  type  MediaEnum
   media Media[]   @relation("Genres")
 
   @@index([type])
   @@index([MDBID])
+}
+
+model Company {
+  id             String  @id @default(cuid())
+  MDBID          Int
+  name           String
+  description    String
+  headquarters   String
+  logo_path      String
+  origin_country String
+  homepage       String
+  media          Media[] @relation("Companies")
 }

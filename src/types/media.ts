@@ -1,4 +1,3 @@
-
 export interface NewMediaResultType {
   adult: boolean;
   backdrop_path: string;
@@ -8,6 +7,7 @@ export interface NewMediaResultType {
   original_language: string;
   original_title: string;
   overview: string;
+  tagline: string;
   popularity: number;
   poster_path: string;
   production_companies: Productioncompany[];
@@ -17,8 +17,8 @@ export interface NewMediaResultType {
   runtime: number;
   spoken_languages: Spokenlanguage[];
   status: string;
-  title?: string
-  name?: string
+  title?: string;
+  name?: string;
 }
 
 interface Spokenlanguage {
@@ -43,3 +43,13 @@ interface Genre {
   id: number;
   name: string;
 }
+
+export type SearchCompanyByIdResultType = {
+  description: string;
+  headquarters: string;
+  homepage: string;
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+};
