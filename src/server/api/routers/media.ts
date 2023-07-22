@@ -14,7 +14,7 @@ export const mediaRouter = createTRPCRouter({
       const media = await ctx.prisma.media.findFirst({
         where: { MDBID: input.MDBId, type: input.type },
       });
-      if (media) return media.id;
+      if (media) return {id:media.id};
       const searchForNewMedia = await axios.get<NewMediaResultType>(
         `https://api.themoviedb.org/3/${input.type}/${input.MDBId}`,
         {
@@ -35,7 +35,7 @@ export const mediaRouter = createTRPCRouter({
         select: { id: true },
       });
 
-      const newMedia = await ctx.prisma.media.create({
+         const newMedia = await ctx.prisma.media.create({
         data: {
           name: searchForNewMedia.data.title || searchForNewMedia.data.name,
           poster_path: searchForNewMedia.data.poster_path,
@@ -55,6 +55,6 @@ export const mediaRouter = createTRPCRouter({
           },
         },
       });
-      return newMedia.id;
+      return {id: newMedia.id};
     }),
 });

@@ -44,7 +44,7 @@ model Media {
   updatedAt           DateTime  @updatedAt
   imdb_id             String?
   backdrop_path       String?
-  overview            String?
+  overview            String?   @db.LongText
   poster_path         String?
   release_date        String?
   production_countrie String?
