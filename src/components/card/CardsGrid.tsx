@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import type { CardType } from "~/types/utils";
 import { api } from "~/utils/api";
 import { SmallPoster } from "~/utils/utils";
@@ -10,14 +11,15 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { useRouter } from "next/router";
+import { PosterImage } from "~/utils/media";
 
 const CardsGrid: React.FC<{ cards?: CardType[] }> = ({ cards }) => {
   const router = useRouter();
-  const mutateMedia = api.media.getOrCreateMedia.useMutation({onSuccess: (data)=>{
-    router.push(`/media/${data.id}`);
-
-  }});
+  const mutateMedia = api.media.getOrCreateMedia.useMutation({
+    onSuccess: async (data) => {
+      await router.push(`/media/${data.id}`);
+    },
+  });
 
   if (!cards) return null;
   return (
@@ -33,7 +35,7 @@ const CardsGrid: React.FC<{ cards?: CardType[] }> = ({ cards }) => {
                 alt={card.title}
                 className="rounded-t-md"
                 fill
-                src={SmallPoster + card.image}
+                src={PosterImage({size: "small", src: card.image})}
                 sizes="(max-width: 900px) 300px, (max-width: 1200px) 400px "
               />
             </div>

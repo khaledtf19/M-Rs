@@ -27,7 +27,7 @@ const SearchPage: React.FC = () => {
       setCurrentPage(1);
       setMaxPages(0);
       setPages([]);
-    }, 1500);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [search]);
 
