@@ -10,5 +10,5 @@ export const PosterImage = ({
 }) => {
   return size === "small"
     ? `https://www.themoviedb.org/t/p/w220_and_h330_face/${src}`
-    : `https://www.themoviedb.org/t/p/w600_and_h900_bestv2/${src}`;
+    : `https://www.themoviedb.org/t/p/w300_and_h450_bestv2/${src}`;
 };
