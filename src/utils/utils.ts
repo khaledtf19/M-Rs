@@ -1,4 +1,3 @@
-import { auth } from "@clerk/nextjs/dist/types/server-helpers.server";
 import { Film, Home, Search, Star, Tv, UserCircle2 } from "lucide-react";
 
 export const PosterURL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/";

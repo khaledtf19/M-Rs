@@ -12,7 +12,7 @@ const SearchPage: React.FC = () => {
   const [maxPages, setMaxPages] = useState(0);
   const [pages, setPages] = useState<CardType[][]>([]);
 
-  const { isLoading, mutate: mutateSearch } = api.search.search.useMutation({
+  const { isLoading: isSearchLoading, mutate: mutateSearch } = api.search.search.useMutation({
     onSuccess: (newData) => {
       setMaxPages(newData.maxPages);
       const newPages = pages;
@@ -27,7 +27,7 @@ const SearchPage: React.FC = () => {
       setCurrentPage(1);
       setMaxPages(0);
       setPages([]);
-    }, 1500);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [search]);
 
@@ -45,7 +45,7 @@ const SearchPage: React.FC = () => {
           }}
         />
       </div>
-      {isLoading ? (
+      {isSearchLoading ? (
         <LoadingCardsGrid
           cards={Array.from({ length: 20 }, (_, i) => ({ id: i + 1 }))}
         />
