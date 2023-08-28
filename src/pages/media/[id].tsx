@@ -32,10 +32,9 @@ const MediaPage = () => {
           )}
         </div>
       </div>
-      <div>
-        <div className="flex flex-col  justify-center gap-2 lg:flex-row">
-          <div className="relative h-[200px] w-[150px] md:h-[450px] md:w-[300px] lg:w-[350px] bottom-36 ">
-            <div className=" relative h-[200px] w-[150px] md:h-[450px] md:w-[300px] lg:w-[310px] ">
+      <div className="relative bottom-20 md:bottom-0 w-full">
+        <div className="flex flex-col justify-center gap-2 lg:flex-row">
+          <div className="relative h-[200px] w-[130px] md:h-[410px] md:w-[290px] lg:w-[320px] md:bottom-36 self-center ">
               {mediaDetails?.poster_path ? (
                 <Image
                   alt="image"
@@ -51,10 +50,9 @@ const MediaPage = () => {
               ) : (
                 ""
               )}
-            </div>
           </div>
           <div className="z-50 w-fit px-4 text-center">
-            <h1 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl lg:text-6xl">
+            <h1 className="text-3xl font-bold  sm:text-4xl md:text-5xl lg:text-6xl">
               {mediaDetails?.name}
             </h1>
             <p>{mediaDetails?.overview}</p>
