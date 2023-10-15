@@ -1,3 +1,5 @@
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CardsGrid from "~/components/card/CardsGrid";
 import LoadingCardsGrid from "~/components/card/LoadingCardsGrid";
@@ -7,7 +9,8 @@ import { CardType } from "~/types/utils";
 import { api } from "~/utils/api";
 
 const SearchPage: React.FC = () => {
-  const [search, setSearch] = useState("");
+  const router = useRouter()
+  const [search, setSearch] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const [maxPages, setMaxPages] = useState(0);
   const [pages, setPages] = useState<CardType[][]>([]);
@@ -22,15 +25,25 @@ const SearchPage: React.FC = () => {
   });
 
   useEffect(() => {
+    if(search.length > 0) {
+      router.push({query: {search: search }})
+    }
     const timer = setTimeout(() => {
       mutateSearch({ query: search, page: 1 });
       setCurrentPage(1);
       setMaxPages(0);
       setPages([]);
-    }, 1000);
+    }, 500);
     return () => clearTimeout(timer);
   }, [search]);
 
+  useEffect(()=>{
+    if(router.query.search) {
+      setSearch(router.query.search as string)
+    } 
+  }, [router.isReady])
+  
+  
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <div className="w-full md:w-1/2 lg:w-1/3">
