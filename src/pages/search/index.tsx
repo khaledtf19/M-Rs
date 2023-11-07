@@ -1,4 +1,3 @@
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import CardsGrid from "~/components/card/CardsGrid";
@@ -29,7 +28,9 @@ const SearchPage: React.FC = () => {
       router.push({query: {search: search }})
     }
     const timer = setTimeout(() => {
-      mutateSearch({ query: search, page: 1 });
+      if(search.length > 0) {
+        mutateSearch({ query: search, page: 1 });
+      }
       setCurrentPage(1);
       setMaxPages(0);
       setPages([]);
