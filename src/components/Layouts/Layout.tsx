@@ -8,7 +8,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Head>
         <title>MRs</title>
         <meta name="description" content="Movies Reviews" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/MRS-Icon.svg" />
       </Head>
       <Navbar />
       <main className="bg-background min-h-screen pt-5">

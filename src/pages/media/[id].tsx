@@ -16,7 +16,7 @@ const MediaPage = () => {
       <div className="  h-[200px] w-full sm:h-[300px] md:h-[400px] lg:h-[500px]">
         <div className=" absolute left-0 right-0 top-14 w-full lg:h-[500px]">
           {mediaDetails?.backdrop_path ? (
-            <div className="relative h-[200px] w-full sm:h-[300px] md:h-[400px] lg:h-[500px]">
+            <div className="relative h-[200px] w-full sm:h-[300px] md:h-[400px] lg:h-[500px] ">
               <Image
                 alt="image"
                 fill
@@ -26,30 +26,31 @@ const MediaPage = () => {
                 blurDataURL={shimmerImg}
                 placeholder="blur"
               />
+              <div className="absolute bottom-0 w-full h-full bg-gradient-to-t from-background to-transparent"/>
             </div>
           ) : (
             ""
           )}
         </div>
       </div>
-      <div className="relative bottom-20 md:bottom-0 w-full">
+      <div className="relative bottom-20 w-full md:bottom-0">
         <div className="flex flex-col justify-center gap-2 lg:flex-row">
-          <div className="relative h-[200px] w-[130px] md:h-[410px] md:w-[290px] lg:w-[320px] md:bottom-36 self-center ">
-              {mediaDetails?.poster_path ? (
-                <Image
-                  alt="image"
-                  src={PosterImage({
-                    src: mediaDetails?.poster_path,
-                    size: "large",
-                  })}
-                  fill
-                  sizes="(max-width: 900px) 300px, (max-width: 1200px) 600px"
-                  blurDataURL={shimmerImg}
-                  placeholder="blur"
-                />
-              ) : (
-                ""
-              )}
+          <div className="relative h-[200px] w-[130px] self-center md:bottom-36 md:h-[410px] md:w-[290px] lg:w-[320px] ">
+            {mediaDetails?.poster_path ? (
+              <Image
+                alt="image"
+                src={PosterImage({
+                  src: mediaDetails?.poster_path,
+                  size: "large",
+                })}
+                fill
+                sizes="(max-width: 900px) 300px, (max-width: 1200px) 600px"
+                blurDataURL={shimmerImg}
+                placeholder="blur"
+              />
+            ) : (
+              ""
+            )}
           </div>
           <div className="z-50 w-fit px-4 text-center">
             <h1 className="text-3xl font-bold  sm:text-4xl md:text-5xl lg:text-6xl">
