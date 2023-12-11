@@ -3,6 +3,12 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import { shimmerImg } from "~/utils/image";
 import { BackdropImage, PosterImage } from "~/utils/media";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const MediaPage = () => {
   const router = useRouter();
@@ -26,7 +32,7 @@ const MediaPage = () => {
                 blurDataURL={shimmerImg}
                 placeholder="blur"
               />
-              <div className="absolute bottom-0 w-full h-full bg-gradient-to-t from-background to-transparent"/>
+              <div className="absolute bottom-0 h-full w-full bg-gradient-to-t from-background to-transparent" />
             </div>
           ) : (
             ""
@@ -35,7 +41,7 @@ const MediaPage = () => {
       </div>
       <div className="relative bottom-20 w-full md:bottom-0">
         <div className="flex flex-col justify-center gap-2 lg:flex-row">
-          <div className="relative h-[200px] w-[130px] self-center md:bottom-36 md:h-[410px] md:w-[290px] lg:w-[320px] ">
+          <div className="relative self-center md:bottom-36 h-[410px] w-[260px] lg:w-[320px] ">
             {mediaDetails?.poster_path ? (
               <Image
                 alt="image"
@@ -52,11 +58,16 @@ const MediaPage = () => {
               ""
             )}
           </div>
-          <div className="z-50 w-fit px-4 text-center">
+          <div className="z-50  px-4 text-center w-full">
             <h1 className="text-3xl font-bold  sm:text-4xl md:text-5xl lg:text-6xl">
               {mediaDetails?.name}
             </h1>
-            <p>{mediaDetails?.overview}</p>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger>Overview</AccordionTrigger>
+                <AccordionContent>{mediaDetails?.overview}</AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </div>
