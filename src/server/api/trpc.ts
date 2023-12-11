@@ -13,7 +13,11 @@ import { ZodError } from "zod";
 import { prisma } from "~/server/db";
 
 import { getAuth } from "@clerk/nextjs/server";
-import { SignedInAuthObject,SignedOutAuthObject, users } from "@clerk/nextjs/api";
+import {
+  SignedInAuthObject,
+  SignedOutAuthObject,
+  users,
+} from "@clerk/nextjs/api";
 
 /**
  * 1. CONTEXT
@@ -52,7 +56,7 @@ const createInnerTRPCContext = ({ auth }: AuthContext) => {
  * @see https://trpc.io/docs/context
  */
 export const createTRPCContext = (_opts: CreateNextContextOptions) => {
-  return createInnerTRPCContext({ auth: getAuth(_opts.req) });  
+  return createInnerTRPCContext({ auth: getAuth(_opts.req) });
 };
 
 /**
@@ -93,12 +97,14 @@ const isAuthed = t.middleware(({ ctx, next }) => {
       auth: ctx.auth,
     },
   });
-})
-const isAdmin = t.middleware(async({ ctx, next }) => {
+});
+const isAdmin = t.middleware(async ({ ctx, next }) => {
   if (!ctx.auth.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
-  const orgs =await users.getOrganizationMembershipList({userId: ctx.auth.userId});
+  const orgs = await users.getOrganizationMembershipList({
+    userId: ctx.auth.userId,
+  });
   // if(!user) {
   //   throw new TRPCError({ code: "UNAUTHORIZED" });
   // }
@@ -110,8 +116,8 @@ const isAdmin = t.middleware(async({ ctx, next }) => {
     ctx: {
       auth: ctx.auth,
     },
-  })
-})
+  });
+});
 /**
  * This is how you create new routers and sub-routers in your tRPC API.
  *
@@ -129,5 +135,3 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use(isAuthed);
 export const adminProcedure = t.procedure.use(isAdmin);
-
-
