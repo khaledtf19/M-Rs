@@ -13,14 +13,17 @@ const config = {
     defaultLocale: "en",
   },
   typescript: {
-    ignoreBuildErrors: true
-  }
-  , eslint: {
-    ignoreDuringBuilds: true
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["image.tmdb.org", "www.themoviedb.org"],
-  }
-
+    remotePatterns: [
+      { hostname: "image.tmdb.org" },
+      { hostname: "www.themoviedb.org" },
+    ],
+    // ["", ""],
+  },
 };
 export default config;

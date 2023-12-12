@@ -25,9 +25,8 @@ const SearchPage: React.FC = () => {
     });
 
   useEffect(() => {
-    if (search.length > 0) {
-      router.push({ query: { search: search } });
-    }
+    void router.push({ query: { search: search } });
+
     const timer = setTimeout(() => {
       if (search.length > 0) {
         mutateSearch({ query: search, page: 1 });
